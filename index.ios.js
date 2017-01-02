@@ -1,3 +1,4 @@
+"use strict";
 var moment = require('moment');
 /**
  * Sample React Native App
@@ -11,8 +12,12 @@ import {
   StyleSheet,
   Text,
   View,
-  Image
+  Image,
+  TextInput, 
+  AsyncStorage,
 } from 'react-native';
+
+// var STORE = ['red', 'green', 'blue', 'karin'];
 
 class Greeting extends Component {
   render(){
@@ -41,7 +46,17 @@ class Blink extends Component {
   }
 }
 
-class FlexDimensionsBasics extends Component {
+var FlexDimensionsBasics = React.createClass({
+
+  componentDidMount: function() {
+      AsyncStorage.getItem("myKey").then((value) => {
+          this.setState({"myKey": value});
+      }).done();
+  },
+
+  getInitialState: function() {
+    return { };
+  },
 
   render() {
     let pic = {
@@ -49,22 +64,7 @@ class FlexDimensionsBasics extends Component {
     };
 
     return (
-      // Try removing the `flex: 1` on the parent View.
-      // The parent will not have dimensions, so the children can't expand.
-      // What if you add `height: 300` instead of `flex: 1`?
       <View style={{flex: 1}}>
-        <View style={{flex:1, flexDirection:'row', justifyContent: 'center', padding: 20}}>
-          <View style={{width: 50, height: 50, backgroundColor: 'powderblue'}}>
-            <Blink text='*' />
-          </View>
-          <View style={{width: 50, height: 50, backgroundColor: 'skyblue'}}>
-            <Blink text='*' />
-          </View>
-          <View style={{width: 50, height: 50, backgroundColor: 'steelblue'}}>
-            <Blink text='*' />
-          </View>
-        </View>
-
         <View style={styles.container}>
           <Image source={pic} style={{width: 240, height: 240}}/>
           <Text style={styles.whatIsIt}>
@@ -72,32 +72,45 @@ class FlexDimensionsBasics extends Component {
           </Text>
         </View>
 
-        <View style={{flex:2, flexDirection:'column'}}>
+        <View style={styles.container2}>
+          <Text style={styles.saved}>
+            {this.state.myKey}
+          </Text>
+          <View>
+            <TextInput style={styles.formInput} onChangeText={(text) => this.saveData(text)} value="" />
+          </View>
+          <Text style={styles.instructions}>
+            Type something into the text box. It will be saved to device storage. Next time you open the application, the saved data will still exist.
+          </Text>
+        </View>
+
+
+        <View style={{flex:1, flexDirection:'column'}}>
           <View style={{flex: 1, backgroundColor: 'powderblue'}}>
             <Blink text={<Greeting name='Karin' />} />
           </View>
           <View style={{flex: 1, backgroundColor: 'skyblue'}}>
             <Blink text={<Greeting name='Miles' />} />
           </View>
-          <View style={{flex: 1, backgroundColor: 'steelblue'}}>
-            <Blink text={<Greeting name='Matt' />} />
-          </View>
         </View>
       </View>
     );
-  }
-};
+  },
 
-// export default class AwesomeProject extends Component {
-//   render() {
-//
-//     return (
-//
-//     );
-//   }
-// }
+  saveData: function(value) {
+    AsyncStorage.setItem("myKey", value);
+    this.setState({"myKey": value});
+  }
+});
 
 const styles = StyleSheet.create({
+  container2: {
+    padding: 30,
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "stretch",
+    backgroundColor: "#F5FCFF",
+  },
   container: {
     flex: 3,
     justifyContent: 'center',
@@ -120,6 +133,24 @@ const styles = StyleSheet.create({
   },
   gray: {
     color: 'gray',
+  },
+  formInput: {
+    flex: 1,
+    height: 26,
+    fontSize: 13,
+    borderWidth: 1,
+    borderColor: "#555555",
+  },
+  saved: {
+    fontSize: 20,
+    textAlign: "center",
+    margin: 10,
+  },
+  instructions: {
+    textAlign: "center",
+    color: "#333333",
+    marginBottom: 5,
+    marginTop: 5,
   },
 });
 
