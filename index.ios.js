@@ -1,3 +1,4 @@
+var moment = require('moment');
 /**
  * Sample React Native App
  * https://github.com/facebook/react-native
@@ -41,6 +42,7 @@ class Blink extends Component {
 }
 
 class FlexDimensionsBasics extends Component {
+
   render() {
     let pic = {
       uri: 'https://facebook.github.io/react-native/img/react-native-congratulations.png'
@@ -51,20 +53,35 @@ class FlexDimensionsBasics extends Component {
       // The parent will not have dimensions, so the children can't expand.
       // What if you add `height: 300` instead of `flex: 1`?
       <View style={{flex: 1}}>
+        <View style={{flex:1, flexDirection:'row', justifyContent: 'center', padding: 20}}>
+          <View style={{width: 50, height: 50, backgroundColor: 'powderblue'}}>
+            <Blink text='*' />
+          </View>
+          <View style={{width: 50, height: 50, backgroundColor: 'skyblue'}}>
+            <Blink text='*' />
+          </View>
+          <View style={{width: 50, height: 50, backgroundColor: 'steelblue'}}>
+            <Blink text='*' />
+          </View>
+        </View>
+
         <View style={styles.container}>
           <Image source={pic} style={{width: 240, height: 240}}/>
           <Text style={styles.whatIsIt}>
-            Cute Foxes are the BEST!
+            Today is: {moment().format("MMM Do, YYYY")}!
           </Text>
         </View>
-        <View style={{flex: 1, backgroundColor: 'powderblue'}}>
-          <Blink text={<Greeting name='Karin' />} />
-        </View>
-        <View style={{flex: 1, backgroundColor: 'skyblue'}}>
-          <Blink text={<Greeting name='Miles' />} />
-        </View>
-        <View style={{flex: 1, backgroundColor: 'steelblue'}}>
-          <Blink text={<Greeting name='Spencer' />} />
+
+        <View style={{flex:2, flexDirection:'column'}}>
+          <View style={{flex: 1, backgroundColor: 'powderblue'}}>
+            <Blink text={<Greeting name='Karin' />} />
+          </View>
+          <View style={{flex: 1, backgroundColor: 'skyblue'}}>
+            <Blink text={<Greeting name='Miles' />} />
+          </View>
+          <View style={{flex: 1, backgroundColor: 'steelblue'}}>
+            <Blink text={<Greeting name='Matt' />} />
+          </View>
         </View>
       </View>
     );
@@ -85,7 +102,6 @@ const styles = StyleSheet.create({
     flex: 3,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
   },
   welcome: {
     fontSize: 20,
