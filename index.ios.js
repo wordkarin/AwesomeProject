@@ -11,7 +11,8 @@ import {
   StyleSheet,
   Text,
   View,
-  Image
+  Image,
+  TextInput
 } from 'react-native';
 
 class Greeting extends Component {
@@ -43,6 +44,11 @@ class Blink extends Component {
 
 class FlexDimensionsBasics extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {text: ''};
+  }
+
   render() {
     let pic = {
       uri: 'https://facebook.github.io/react-native/img/react-native-congratulations.png'
@@ -53,17 +59,16 @@ class FlexDimensionsBasics extends Component {
       // The parent will not have dimensions, so the children can't expand.
       // What if you add `height: 300` instead of `flex: 1`?
       <View style={{flex: 1}}>
-        <View style={{flex:1, flexDirection:'row', justifyContent: 'center', padding: 20}}>
-          <View style={{width: 50, height: 50, backgroundColor: 'powderblue'}}>
-            <Blink text='*' />
+          <View style={{padding: 10}}>
+            <TextInput
+              style={{height: 50, textAlign:'center'}}
+              placeholder="Type here to translate!"
+              onChangeText={(text) => this.setState({text})}
+            />
+            <Text style={{padding: 10, fontSize: 42}}>
+              {this.state.text.split(' ').map((word) => word && '🍕').join(' ')}
+            </Text>
           </View>
-          <View style={{width: 50, height: 50, backgroundColor: 'skyblue'}}>
-            <Blink text='*' />
-          </View>
-          <View style={{width: 50, height: 50, backgroundColor: 'steelblue'}}>
-            <Blink text='*' />
-          </View>
-        </View>
 
         <View style={styles.container}>
           <Image source={pic} style={{width: 240, height: 240}}/>
@@ -72,15 +77,9 @@ class FlexDimensionsBasics extends Component {
           </Text>
         </View>
 
-        <View style={{flex:2, flexDirection:'column'}}>
+        <View style={{flex:1, flexDirection:'column'}}>
           <View style={{flex: 1, backgroundColor: 'powderblue'}}>
             <Blink text={<Greeting name='Karin' />} />
-          </View>
-          <View style={{flex: 1, backgroundColor: 'skyblue'}}>
-            <Blink text={<Greeting name='Miles' />} />
-          </View>
-          <View style={{flex: 1, backgroundColor: 'steelblue'}}>
-            <Blink text={<Greeting name='Matt' />} />
           </View>
         </View>
       </View>
