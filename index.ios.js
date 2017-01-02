@@ -13,7 +13,7 @@ import {
   Text,
   View,
   Image,
-  TextInput, 
+  TextInput,
   AsyncStorage,
 } from 'react-native';
 
@@ -55,8 +55,9 @@ var FlexDimensionsBasics = React.createClass({
   },
 
   getInitialState: function() {
-    return { };
+    return {};
   },
+
 
   render() {
     let pic = {
@@ -71,26 +72,25 @@ var FlexDimensionsBasics = React.createClass({
             Today is: {moment().format("MMM Do, YYYY")}!
           </Text>
         </View>
-
-        <View style={styles.container2}>
+        <View style={{padding: 10}}>
           <Text style={styles.saved}>
             {this.state.myKey}
           </Text>
           <View>
-            <TextInput style={styles.formInput} onChangeText={(text) => this.saveData(text)} value="" />
+            <TextInput
+              style={{height: 50, textAlign:'center'}}
+              placeholder="This will be saved!"
+              onChangeText={(text) => this.saveData(text)}
+              />
           </View>
           <Text style={styles.instructions}>
             Type something into the text box. It will be saved to device storage. Next time you open the application, the saved data will still exist.
           </Text>
         </View>
 
-
         <View style={{flex:1, flexDirection:'column'}}>
           <View style={{flex: 1, backgroundColor: 'powderblue'}}>
             <Blink text={<Greeting name='Karin' />} />
-          </View>
-          <View style={{flex: 1, backgroundColor: 'skyblue'}}>
-            <Blink text={<Greeting name='Miles' />} />
           </View>
         </View>
       </View>
@@ -104,13 +104,6 @@ var FlexDimensionsBasics = React.createClass({
 });
 
 const styles = StyleSheet.create({
-  container2: {
-    padding: 30,
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "stretch",
-    backgroundColor: "#F5FCFF",
-  },
   container: {
     flex: 3,
     justifyContent: 'center',
@@ -120,11 +113,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: 'center',
     margin: 20,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
   },
   whatIsIt: {
     color: '#ff6643',
